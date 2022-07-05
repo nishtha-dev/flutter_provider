@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
         children: [
           Consumer<BreadCrumbProvider>(
             builder: (context, value, child) {
-             // print("inside consumer--> ${value.items}");
+              // print("inside consumer--> ${value.items}");
               return BreadCrumbWidget(items: value.items);
             },
           ),
@@ -173,4 +173,46 @@ class _NewBreadCrumWidgetState extends State<NewBreadCrumWidget> {
       ),
     );
   }
+}
+
+class MyWidget extends StatefulWidget {
+  const MyWidget({Key? key}) : super(key: key);
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  @override
+  Widget build(BuildContext context) {}
+}
+
+abstract class Logger {
+  void log(String message);
+}
+
+abstract class FileLogger implements Logger {
+  @override
+  void log(String message) {
+    print('FileLogger: $message');
+  }
+
+  void logToFile(String message);
+}
+
+class PdfFileLogger extends FileLogger {
+  @override
+  void logToFile(String message) {
+    String filePath = _createFile(message);
+    print(filePath);
+  }
+
+  String _createFile(String message) {
+    return 'android/data/com.example flutter app/files/log.txt://tilepath';
+  }
+}
+
+void main() {
+  String logMessage = 'log created';
+  final pdfFile = FileLogger;
 }
